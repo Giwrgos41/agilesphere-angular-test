@@ -1,16 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Weather } from '../model/weather';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
+import { SearchWeather } from './store';
+import { selectWeatherList } from './store/selectors/weather';
 
 @Component({
   selector: 'app-weather',
   template: `
-  <app-search></app-search>
-  <app-results></app-results>  `
+  <app-search (citySearch)="citySearch($event)"></app-search>
+  <app-results [weatherResultsList]="this.weatherResultsList | async"></app-results>  `
 })
-export class WeatherContainer {
+export class WeatherContainerComponent {
+  weatherResultsList: Observable<Weather[]>;
 
-  constructor() {}
+  constructor(private store: Store<AppState>) {
+    this.weatherResultsList = store.select(selectWeatherList);
+  }
 
-  citySearch() {
-    // TO BE IMPLMENTED
+  citySearch(event) {
+    this.store.dispatch(new SearchWeather(event));
   }
 }

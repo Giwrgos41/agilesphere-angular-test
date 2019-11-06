@@ -1,20 +1,14 @@
-<table class="table">
+<table class="table" *ngIf="weatherResultsList">
   <thead class="thead-dark">
   <tr>
     <th scope="col">City</th>
-    <th scope="col">6 AM</th>
-    <th scope="col">12 PM</th>
-    <th scope="col">6 PM</th>
-    <th scope="col">12 AM</th>
+    <th scope="col" *ngFor="let item of weatherResultsList[0]?.list">{{ item.dt * 1000| date: 'shortTime' }}</th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td scope="row">London</td>
-    <td scope="row">3 &deg;</td>
-    <td scope="row">12.5 &deg;</td>
-    <td scope="row">9 &deg;</td>
-    <td scope="row">2 &deg;</td>
+  <tr *ngFor="let weather of weatherResultsList">
+    <td scope="row">{{ weather.city.name }}</td>
+    <td scope="row" *ngFor="let item of weather.list">{{ item.main.temp.toFixed(1) }} &deg;C</td>
   </tr>
   </tbody>
 </table>

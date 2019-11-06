@@ -1,15 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Weather } from '../../../model/weather';
+import { AppState } from '../../../app.state';
+import { Store } from '@ngrx/store';
+import { selectErrorMessage } from '../../store/selectors/weather';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html'
 })
 export class SearchComponent {
-  // IMPLEMENT ANY INPUT OR OUTPUT YOU MIGHT NEED
+  @Output() citySearch = new EventEmitter<string>();
 
-  constructor() { }
+  weather: Weather;
+  error: Observable<string>;
 
-  search() {
-    // TO BE IMPLEMENTED
+  constructor(private store: Store<AppState>) {
+    this.error = store.select(selectErrorMessage);
+  }
+
+  search(city) {
+    this.citySearch.emit(city);
   }
 }

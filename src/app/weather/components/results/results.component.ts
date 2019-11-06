@@ -1,15 +1,12 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Weather } from '../../../model/weather';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html'
 })
-export class ResultsComponent implements OnChanges {
+export class ResultsComponent {
+  @Input() weatherResultsList: Weather[];
+
   constructor() { }
-
-  ngOnChanges() {
-    // IMPLEMENT ANYTHING YOU BEKIEVE YOU MIGHT NEED HERE
-  }
 }
-
-
